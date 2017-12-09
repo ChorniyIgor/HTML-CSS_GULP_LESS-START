@@ -78,7 +78,7 @@ gulp.task("svgsprite",function(){
 
 //збірка білд
 gulp.task("build",function(fn){
-  run("less", "min", "imagemin", "svgsprite", fn);
+  run("less", "min", "imagemin", fn);
 });
 
 
@@ -87,15 +87,19 @@ gulp.task("build",function(fn){
 gulp.task("copy", function(){
   return gulp.src([
     "fonts/**/*{woff,woff2}",
-    "img/**",
     "js/**",
     "*.html"
   ], {
     base: "."
   })
-  .pipe(gulp.dest("build"));
+  .pipe(gulp.dest("final"));
 });
 
 gulp.task("clean", function(){
-  return del("build");
+  return del("final");
+});
+
+//1-gulp min 2-gulp build 3-gulp copy
+gulp.task("final",function(fn){
+  run("min", "build", "copy", fn);
 });
